@@ -72,7 +72,7 @@ public class Jf_spelerInschrijving extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("NIEUW EVENEMENT 2");
+        jLabel1.setText("NIEUW EVENEMENT Andrius");
         jLabel1.setToolTipText("");
 
         jTextField2.setText("jTextField2");
