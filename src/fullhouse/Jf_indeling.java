@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 
 /**
@@ -35,10 +36,17 @@ public class Jf_indeling extends javax.swing.JFrame {
         vulToernooi();
     }
 
-    private void vulToernooi() {
+private void vulToernooi() {
         try {
-            String query = "select eventnr, naam, datum from Evenement "
-                    + "where eventnr like ?";
+            DefaultListModel datamodel = new DefaultListModel();
+            this.jL_spelers.setModel(datamodel);
+            
+            String query = "select ins.spelernr as InsSpelernr, s.s_naam as spelerNaam,"
+                    + " s.s_ranking as spelerRanking, ins.eventnr as InsEventnr,"
+                    + " ev.naam as Eventnaam "
+                    + "from Inschrijving ins join Speler s on ins.spelernr = s.spelernr "
+                    + "join Evenement ev on ev.eventnr = ins.eventnr "
+                    + "where ins.betaald = 1 and ev.eventnr like ?;";
             Connection connection = FullhouseDB.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, eventnr);
@@ -46,11 +54,18 @@ public class Jf_indeling extends javax.swing.JFrame {
             ResultSet results = statement.executeQuery();
 
             while (results.next()) {
-                String eventNr = results.getString("eventnr");
+                int spelerNr = results.getInt("InsSpelernr");
+                String spelerNaam = results.getString("spelerNaam");
+                String eventNr = results.getString("InsEventnr");
                 this.Tf_toernooiNr.setText(eventNr);
-                String toernooiNaam = results.getString("naam");
+                String toernooiNaam = results.getString("Eventnaam");
                 this.Tf_toernooiNaam.setText(toernooiNaam);
+                int spelerRanking = results.getInt("spelerRanking");
+                
+                Speler speler = new Speler(new Integer(spelerNr), spelerNaam, new Integer(spelerRanking));
+                datamodel.addElement(speler);
             }
+            this.jL_spelers.setModel(datamodel);
         } catch (SQLException ex) {
             Logger.getLogger(jF_evenementZoeken.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -67,9 +82,9 @@ public class Jf_indeling extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList();
+        jL_spelers = new javax.swing.JList();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jList2 = new javax.swing.JList();
+        jL_indeling = new javax.swing.JList();
         jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -88,19 +103,19 @@ public class Jf_indeling extends javax.swing.JFrame {
         setTitle("FULL HOUSE");
         setResizable(false);
 
-        jList1.setModel(new javax.swing.AbstractListModel() {
+        jL_spelers.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
-        jScrollPane1.setViewportView(jList1);
+        jScrollPane1.setViewportView(jL_spelers);
 
-        jList2.setModel(new javax.swing.AbstractListModel() {
+        jL_indeling.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
-        jScrollPane2.setViewportView(jList2);
+        jScrollPane2.setViewportView(jL_indeling);
 
         jButton1.setText("Genereer >");
 
@@ -292,12 +307,12 @@ public class Jf_indeling extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JComboBox jComboBox1;
+    private javax.swing.JList jL_indeling;
+    private javax.swing.JList jL_spelers;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JList jList1;
-    private javax.swing.JList jList2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
