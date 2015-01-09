@@ -36,6 +36,11 @@ public class Jf_evenementNieuw extends javax.swing.JFrame {
         this.jCB_niveauMclass.addItem("Halfgevorderd");
         this.jCB_niveauMclass.addItem("Gevorderd");
     }
+    
+   
+    
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -139,6 +144,11 @@ public class Jf_evenementNieuw extends javax.swing.JFrame {
         jLabel15.setText("Opmerkingen:");
 
         jComboBox3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox3ActionPerformed(evt);
+            }
+        });
 
         jTextField8.setText("jTextField8");
 
@@ -157,6 +167,11 @@ public class Jf_evenementNieuw extends javax.swing.JFrame {
         jLabel17.setText("Naam:");
 
         jTextField5.setText("jTextField5");
+        jTextField5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField5ActionPerformed(evt);
+            }
+        });
 
         jLabel18.setText("Min.Deelnemers:");
 
@@ -329,6 +344,7 @@ public class Jf_evenementNieuw extends javax.swing.JFrame {
 
     private void jCB_soortEvtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCB_soortEvtActionPerformed
         String selectedBook = (String) this.jCB_soortEvt.getSelectedItem();
+        
     }//GEN-LAST:event_jCB_soortEvtActionPerformed
 
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
@@ -338,6 +354,15 @@ public class Jf_evenementNieuw extends javax.swing.JFrame {
     private void jCB_niveauMclassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCB_niveauMclassActionPerformed
         String selectedBook = (String) this.jCB_niveauMclass.getSelectedItem();
     }//GEN-LAST:event_jCB_niveauMclassActionPerformed
+
+    private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField5ActionPerformed
+
+    private void jComboBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox3ActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_jComboBox3ActionPerformed
 
     /**
      * @param args the command line arguments

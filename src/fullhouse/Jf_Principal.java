@@ -41,7 +41,6 @@ public class Jf_Principal extends javax.swing.JFrame {
     private void initComponents() {
 
         jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
@@ -60,16 +59,7 @@ public class Jf_Principal extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton2);
-        jButton2.setBounds(220, 240, 63, 23);
-
-        jButton3.setText("Ranking");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jButton3);
-        jButton3.setBounds(540, 240, 71, 23);
+        jButton2.setBounds(220, 240, 82, 29);
 
         jButton4.setText("Evenement");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
@@ -78,7 +68,7 @@ public class Jf_Principal extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton4);
-        jButton4.setBounds(90, 240, 87, 23);
+        jButton4.setBounds(90, 240, 112, 29);
 
         jButton5.setText("Locatie");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
@@ -87,7 +77,7 @@ public class Jf_Principal extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton5);
-        jButton5.setBounds(430, 240, 67, 23);
+        jButton5.setBounds(430, 240, 89, 29);
 
         jButton6.setText("Overzicht");
         jButton6.addActionListener(new java.awt.event.ActionListener() {
@@ -96,7 +86,7 @@ public class Jf_Principal extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton6);
-        jButton6.setBounds(320, 240, 97, 23);
+        jButton6.setBounds(320, 240, 97, 29);
 
         jL_PrincipalBackg.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jL_PrincipalBackg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/logo730.png"))); // NOI18N
@@ -117,10 +107,6 @@ public class Jf_Principal extends javax.swing.JFrame {
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         new Jf_Locatie().setVisible(true);
     }//GEN-LAST:event_jButton5ActionPerformed
-
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        new Jf_Ranking().setVisible(true);
-    }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         new Jf_Overzicht().setVisible(true);
@@ -170,7 +156,6 @@ public class Jf_Principal extends javax.swing.JFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;

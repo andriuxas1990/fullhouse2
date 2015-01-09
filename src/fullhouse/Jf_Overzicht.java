@@ -35,6 +35,7 @@ public class Jf_Overzicht extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
+        setResizable(false);
         getContentPane().setLayout(null);
 
         jList1.setModel(new javax.swing.AbstractListModel() {
@@ -49,19 +50,19 @@ public class Jf_Overzicht extends javax.swing.JFrame {
 
         jLabel1.setText("Ronde Nummer");
         getContentPane().add(jLabel1);
-        jLabel1.setBounds(23, 61, 73, 14);
+        jLabel1.setBounds(23, 61, 97, 16);
 
         jLabel2.setText("Toernooi Nummer");
         getContentPane().add(jLabel2);
-        jLabel2.setBounds(23, 16, 84, 14);
+        jLabel2.setBounds(23, 16, 114, 16);
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         getContentPane().add(jComboBox1);
-        jComboBox1.setBounds(199, 12, 56, 20);
+        jComboBox1.setBounds(199, 12, 96, 27);
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         getContentPane().add(jComboBox2);
-        jComboBox2.setBounds(199, 57, 56, 20);
+        jComboBox2.setBounds(199, 57, 96, 27);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
