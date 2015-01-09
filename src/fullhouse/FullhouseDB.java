@@ -21,7 +21,7 @@ public class FullhouseDB {
         if(databaseConnectie == null){
                 String connectString = "jdbc:mysql://meru.hhs.nl:3306/14062984";
                 try {
-                     databaseConnectie = DriverManager.getConnection(connectString, "14062984", " ");
+                     databaseConnectie = DriverManager.getConnection(connectString, "14062984", "fuxaejeiSe");
                      System.out.println("Connectie");
                 } catch (SQLException ex) {
                     Logger.getLogger(FullhouseDB.class.getName()).log(Level.SEVERE, null, ex);

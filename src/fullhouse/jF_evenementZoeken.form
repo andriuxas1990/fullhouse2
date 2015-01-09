@@ -91,7 +91,14 @@
       </SubComponents>
     </Container>
     <Component class="javax.swing.JTextField" name="Tf_zoekterm">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Typ uw zoekterm "/>
+        <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+          <Color id="Text Cursor"/>
+        </Property>
+      </Properties>
       <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="Tf_zoektermActionPerformed"/>
         <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="Tf_zoektermFocusGained"/>
         <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="Tf_zoektermKeyReleased"/>
       </Events>
@@ -106,7 +113,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel2">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Zoekterm:"/>
+        <Property name="text" type="java.lang.String" value="Toernooi Naam:"/>
       </Properties>
     </Component>
   </SubComponents>

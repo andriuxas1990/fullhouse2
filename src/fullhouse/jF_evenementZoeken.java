@@ -37,9 +37,8 @@ public class jF_evenementZoeken extends javax.swing.JFrame {
             DefaultTableModel datamodel = createVoedingModel();
             this.jT_evenement.setModel(datamodel);
 
-            String query = "select ev.eventnr as Evenementnr, t.t_naam as Toernooi, ev.datum as Datum "
-                    + "from toernooi t join evenement ev on ev.eventnr = t.eventnr "
-                    + "where t.t_naam like ?;";
+            String query = "select eventnr, naam, datum from Evenement "
+                    + "where eventtype = 'Toernooi' and naam like ?;";
             Connection connection = FullhouseDB.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, getZoekTerm());
@@ -47,11 +46,11 @@ public class jF_evenementZoeken extends javax.swing.JFrame {
             ResultSet results = statement.executeQuery();
 
             while (results.next()) {
-                int eventnr = results.getInt("Evenementnr");
-                String toernooiNaam = results.getString("Toernooi");
-                String datum = results.getString("Datum");
-                Object[] rij = {new Integer(eventnr), toernooiNaam, datum};
-                // Object[row][column]
+                int eventnr = results.getInt("eventnr");
+                String toernooiNaam = results.getString("naam");
+                String datum = results.getString("datum");
+                Object[] rij = {new Integer(eventnr),toernooiNaam, datum};
+                //Object[row][column]
                 datamodel.addRow(rij);
 
             }
@@ -132,6 +131,13 @@ public class jF_evenementZoeken extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jT_evenement);
 
+        Tf_zoekterm.setText("Typ uw zoekterm ");
+        Tf_zoekterm.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        Tf_zoekterm.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Tf_zoektermActionPerformed(evt);
+            }
+        });
         Tf_zoekterm.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 Tf_zoektermFocusGained(evt);
@@ -146,7 +152,7 @@ public class jF_evenementZoeken extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel1.setText("EVENEMENT ZOEKEN");
 
-        jLabel2.setText("Zoekterm:");
+        jLabel2.setText("Toernooi Naam:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -211,6 +217,10 @@ public class jF_evenementZoeken extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_jT_evenementMousePressed
+
+    private void Tf_zoektermActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Tf_zoektermActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_Tf_zoektermActionPerformed
 
     /**
      * @param args the command line arguments

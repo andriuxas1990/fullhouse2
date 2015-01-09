@@ -37,9 +37,8 @@ public class Jf_indeling extends javax.swing.JFrame {
 
     private void vulToernooi() {
         try {
-            String query = "select ev.eventnr as Evenementnr, t.t_naam as Toernooi "
-                    + "from toernooi t join evenement ev on ev.eventnr = t.eventnr "
-                    + "where ev.eventnr = ?;";
+            String query = "select eventnr, naam, datum from Evenement "
+                    + "where eventnr like ?";
             Connection connection = FullhouseDB.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, eventnr);
@@ -47,9 +46,9 @@ public class Jf_indeling extends javax.swing.JFrame {
             ResultSet results = statement.executeQuery();
 
             while (results.next()) {
-                String eventNr = results.getString("Evenementnr");
+                String eventNr = results.getString("eventnr");
                 this.Tf_toernooiNr.setText(eventNr);
-                String toernooiNaam = results.getString("Toernooi");
+                String toernooiNaam = results.getString("naam");
                 this.Tf_toernooiNaam.setText(toernooiNaam);
             }
         } catch (SQLException ex) {
