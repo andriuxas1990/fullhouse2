@@ -29,17 +29,16 @@ public class jF_spelerZoeken extends javax.swing.JFrame {
         initComponents();
         setIconImage(new ImageIcon(getClass().getResource("/resources/pokerSpade.png")).getImage());
         this.getContentPane().setBackground(Color.white);
-        vulEvenementTabel();
+        vulSpelersTabel();
     }
 
-    private void vulEvenementTabel() {
+    private void vulSpelersTabel() {
         try {
             DefaultTableModel datamodel = createVoedingModel();
-            this.jT_evenement.setModel(datamodel);
+            this.jT_spelerZoeken.setModel(datamodel);
 
-            String query = "select ev.eventnr as Evenementnr, t.t_naam as Toernooi, ev.datum as Datum "
-                    + "from toernooi t join evenement ev on ev.eventnr = t.eventnr "
-                    + "where t.t_naam like ?;";
+            String query = "select spelernr, s_naam, s_ranking from Speler "
+                    + "where s_naam like ?;";
             Connection connection = FullhouseDB.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, getZoekTerm());
@@ -47,15 +46,15 @@ public class jF_spelerZoeken extends javax.swing.JFrame {
             ResultSet results = statement.executeQuery();
 
             while (results.next()) {
-                int eventnr = results.getInt("Evenementnr");
-                String toernooiNaam = results.getString("Toernooi");
-                String datum = results.getString("Datum");
-                Object[] rij = {new Integer(eventnr), toernooiNaam, datum};
+                int spelernr = results.getInt("SpelerNr");
+                String spelerNaam = results.getString("s_naam");
+                int ranking = results.getInt("s_ranking");
+                Object[] rij = {new Integer(spelernr), spelerNaam, ranking};
                 // Object[row][column]
                 datamodel.addRow(rij);
 
             }
-            this.jT_evenement.setModel(datamodel);
+            this.jT_spelerZoeken.setModel(datamodel);
         } catch (SQLException ex) {
             Logger.getLogger(jF_spelerZoeken.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -73,9 +72,9 @@ public class jF_spelerZoeken extends javax.swing.JFrame {
 
     private DefaultTableModel createVoedingModel() {
         DefaultTableModel model = new TableModel();
-        model.addColumn("EventementNr.");
-        model.addColumn("Evenement");
-        model.addColumn("Datum");
+        model.addColumn("SpelerNr.");
+        model.addColumn("Naam");
+        model.addColumn("Ranking");
         return model;
     }
 
@@ -96,15 +95,31 @@ public class jF_spelerZoeken extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jT_evenement = new javax.swing.JTable();
         Tf_zoekterm = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jT_spelerZoeken = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jT_evenement.setModel(new javax.swing.table.DefaultTableModel(
+        Tf_zoekterm.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                Tf_zoektermFocusGained(evt);
+            }
+        });
+        Tf_zoekterm.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                Tf_zoektermKeyReleased(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel1.setText("SPELER ZOEKEN");
+
+        jLabel2.setText("Speler naam:");
+
+        jT_spelerZoeken.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
                 {null, null, null},
@@ -125,38 +140,21 @@ public class jF_spelerZoeken extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jT_evenement.addMouseListener(new java.awt.event.MouseAdapter() {
+        jT_spelerZoeken.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                jT_evenementMousePressed(evt);
+                jT_spelerZoekenMousePressed(evt);
             }
         });
-        jScrollPane1.setViewportView(jT_evenement);
-
-        Tf_zoekterm.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                Tf_zoektermFocusGained(evt);
-            }
-        });
-        Tf_zoekterm.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                Tf_zoektermKeyReleased(evt);
-            }
-        });
-
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel1.setText("SPELER ZOEKEN");
-
-        jLabel2.setText("Zoekterm:");
+        jScrollPane1.setViewportView(jT_spelerZoeken);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(8, 8, 8)
+                        .addGap(18, 18, 18)
                         .addComponent(jLabel2)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -167,6 +165,7 @@ public class jF_spelerZoeken extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(Tf_zoekterm))))
                     .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
@@ -180,9 +179,9 @@ public class jF_spelerZoeken extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Tf_zoekterm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(51, Short.MAX_VALUE))
+                .addContainerGap(58, Short.MAX_VALUE))
         );
 
         pack();
@@ -197,20 +196,20 @@ public class jF_spelerZoeken extends javax.swing.JFrame {
     }//GEN-LAST:event_Tf_zoektermFocusGained
 
     private void Tf_zoektermKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_Tf_zoektermKeyReleased
-        this.vulEvenementTabel();
+        this.vulSpelersTabel();
     }//GEN-LAST:event_Tf_zoektermKeyReleased
 
-    private void jT_evenementMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jT_evenementMousePressed
+    private void jT_spelerZoekenMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jT_spelerZoekenMousePressed
         if (evt.getClickCount() == 2) {
-            int rij = this.jT_evenement.getSelectedRow();
+            int rij = this.jT_spelerZoeken.getSelectedRow();
             if (rij > -1) {
-                int voednr = (Integer) jT_evenement.getValueAt(rij, 0);
+                int voednr = (Integer) jT_spelerZoeken.getValueAt(rij, 0);
                 this.setVisible(false);
                 Jf_indeling event = new Jf_indeling(voednr);
                 event.setVisible(true);
             }
         }
-    }//GEN-LAST:event_jT_evenementMousePressed
+    }//GEN-LAST:event_jT_spelerZoekenMousePressed
 
     /**
      * @param args the command line arguments
@@ -259,6 +258,6 @@ public class jF_spelerZoeken extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jT_evenement;
+    private javax.swing.JTable jT_spelerZoeken;
     // End of variables declaration//GEN-END:variables
 }
