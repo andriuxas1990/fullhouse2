@@ -36,29 +36,29 @@ public class Jf_spelerNieuw extends javax.swing.JFrame {
 
     }
 
-//     private void getSpelersNr(){
-//        try {
-//            //DefaultTableModel datamodel = createVoedingModel();
-//            //this.jt_Voedsel.setModel(datamodel);
-//            Connection connection = FullhouseDB.getConnection();
-//            
-//           
-//            String query = "select spelernr from Speler where spelernr = '100';";
-//            PreparedStatement statement = connection.prepareStatement(query);
-//             ResultSet results = statement.executeQuery();
-//            
-//            while(results.next()){
-//                int spelernr = results.getInt("spelernr");
-//                System.out.println(spelernr);
-//                // Object[row][column]
-//                //datamodel.addRow(rij);
-//             }
-//            //this.jt_Voedsel.setModel(datamodel);
-//        } catch (SQLException ex) {
-//            Logger.getLogger(Jf_spelerNieuw.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//        
-//    }
+     private void getSpelersNr(){
+        try {
+            //DefaultTableModel datamodel = createVoedingModel();
+            //this.jt_Voedsel.setModel(datamodel);
+            Connection connection = FullhouseDB.getConnection();
+            
+           
+            String query = "select spelernr from Speler where spelernr = '?';";
+            PreparedStatement statement = connection.prepareStatement(query);
+             ResultSet results = statement.executeQuery();
+            
+            while(results.next()){
+                int spelernr = results.getInt("spelernr");
+                System.out.println(spelernr);
+                // Object[row][column]
+                //datamodel.addRow(rij);
+             }
+            //this.jt_Voedsel.setModel(datamodel);
+        } catch (SQLException ex) {
+            Logger.getLogger(Jf_spelerNieuw.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -292,7 +292,7 @@ public class Jf_spelerNieuw extends javax.swing.JFrame {
         String gebdatum = dateFormate.format(jD_nieuwSpeGeb.getDate());
       
        
-        //JOptionPane.showMessageDialog(null, "Speler " + gebdatum);
+        JOptionPane.showMessageDialog(null, "Speler " + naam + " was met succes toegevoegt in FULL♠HOUSE Database !");
         int ranking = Integer.parseInt(jT_nieuwSpeRank.getText());
         boolean instructeur = jC_nieuwSpeInstr.isSelected();
         System.out.println(gebdatum);
