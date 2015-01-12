@@ -4,6 +4,9 @@
  */
 package fullhouse;
 
+import javax.swing.ImageIcon;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author antonioym
@@ -15,7 +18,47 @@ public class Jf_Overzicht extends javax.swing.JFrame {
      */
     public Jf_Overzicht() {
         initComponents();
+        setIconImage(new ImageIcon(getClass().getResource("/resources/pokerSpade.png")).getImage());
+        jComboBox_Toernooi.setVisible(false);
+        jComboBox_Speler.setVisible(false);
+        selectie();
+        
+        
+        
+        
     }
+    private void selectie(){
+    /*
+     * Toernooi Selectie
+     */
+        this.jComboBox_Toernooi.addItem("");
+        this.jComboBox_Toernooi.addItem("Geplande Toernooi");
+        this.jComboBox_Toernooi.addItem("Alle Toernooien");
+        this.jComboBox_Toernooi.addItem("Per Ronde Tafel Indeling");
+   /*
+    * Speler Selectie
+    */
+        this.jComboBox_Speler.addItem("");
+        this.jComboBox_Speler.addItem("Overzicht Rating met gewone geld");
+        this.jComboBox_Speler.addItem("Overzicht ingechreven niet betaald");
+        
+    }
+                 
+    private DefaultTableModel createOverzichtModel(){
+        DefaultTableModel model = new TableModel();
+        model.addColumn("voedingsnummer");
+        model.addColumn("naam eten");
+        return model;
+    }
+    
+    class TableModel extends DefaultTableModel{
+        
+        @Override
+        public boolean isCellEditable(int row, int column){
+            return false;
+        }
+    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -27,35 +70,132 @@ public class Jf_Overzicht extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        jTable_Overzicht = new javax.swing.JTable();
+        jToggleButton_Toernooi = new javax.swing.JToggleButton();
+        jToggleButton_Speler = new javax.swing.JToggleButton();
+        jComboBox_Speler = new javax.swing.JComboBox();
+        jComboBox_Toernooi = new javax.swing.JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
+        setPreferredSize(new java.awt.Dimension(500, 350));
         setResizable(false);
         getContentPane().setLayout(null);
 
-        jList1.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane1.setViewportView(jList1);
+        jTable_Overzicht.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable_Overzicht);
 
         getContentPane().add(jScrollPane1);
-        jScrollPane1.setBounds(40, 90, 246, 194);
+        jScrollPane1.setBounds(20, 90, 450, 230);
 
-        jLabel1.setText("Ronde Nummer");
-        getContentPane().add(jLabel1);
-        jLabel1.setBounds(23, 61, 97, 16);
+        jToggleButton_Toernooi.setText("Selecteer Toernooi");
+        jToggleButton_Toernooi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton_ToernooiActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jToggleButton_Toernooi);
+        jToggleButton_Toernooi.setBounds(10, 10, 240, 29);
 
-        jLabel2.setText("Toernooi Nummer");
-        getContentPane().add(jLabel2);
-        jLabel2.setBounds(23, 16, 114, 16);
+        jToggleButton_Speler.setText("Selecteer Speler");
+        jToggleButton_Speler.setMaximumSize(new java.awt.Dimension(100, 29));
+        jToggleButton_Speler.setMinimumSize(new java.awt.Dimension(100, 29));
+        jToggleButton_Speler.setPreferredSize(new java.awt.Dimension(100, 29));
+        jToggleButton_Speler.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton_SpelerActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jToggleButton_Speler);
+        jToggleButton_Speler.setBounds(250, 10, 240, 29);
+
+        jComboBox_Speler.setMinimumSize(new java.awt.Dimension(275, 27));
+        jComboBox_Speler.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox_SpelerActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jComboBox_Speler);
+        jComboBox_Speler.setBounds(260, 40, 220, 27);
+
+        jComboBox_Toernooi.setMinimumSize(new java.awt.Dimension(275, 27));
+        jComboBox_Toernooi.setPreferredSize(new java.awt.Dimension(210, 27));
+        jComboBox_Toernooi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox_ToernooiActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jComboBox_Toernooi);
+        jComboBox_Toernooi.setBounds(20, 40, 220, 27);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jToggleButton_ToernooiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton_ToernooiActionPerformed
+        if(jToggleButton_Toernooi.isSelected())
+        {
+            jToggleButton_Toernooi.setText("Toernooi Geselecteerd");
+            jComboBox_Toernooi.setVisible(true);
+           // jToggleButton_Speler.setSelected(false);
+            if(jToggleButton_Toernooi.hasFocus())
+                {
+                    jToggleButton_Speler.setSelected(false);
+                    jComboBox_Speler.setVisible(false);
+                    jToggleButton_Speler.setText("Selecteer Speler");
+           
+                }
+            
+        }
+        else 
+        {
+            jToggleButton_Toernooi.setText("Selecteer Toernooi");
+            jComboBox_Toernooi.setVisible(false);
+            //jToggleButton_Speler.setSelected(true);
+            
+        }
+    }//GEN-LAST:event_jToggleButton_ToernooiActionPerformed
+
+    private void jToggleButton_SpelerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton_SpelerActionPerformed
+       if(jToggleButton_Speler.isSelected())
+       {
+           jToggleButton_Speler.setText("Speler Geselecteerd");
+           jComboBox_Speler.setVisible(true);
+           
+           if(jToggleButton_Speler.hasFocus())
+                {
+                    jToggleButton_Toernooi.setSelected(false);
+                    jComboBox_Toernooi.setVisible(false);
+                    jToggleButton_Toernooi.setText("Selecteer Toernooi");
+                }
+       }
+       else
+       {
+            jToggleButton_Speler.setText("Selecteer Speler");
+            jComboBox_Speler.setVisible(false);
+            //jToggleButton_Toernooi.setSelected(true);
+            
+       }
+
+    }//GEN-LAST:event_jToggleButton_SpelerActionPerformed
+
+    private void jComboBox_ToernooiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_ToernooiActionPerformed
+        // TODO add your handling code here:
+       
+    }//GEN-LAST:event_jComboBox_ToernooiActionPerformed
+
+    private void jComboBox_SpelerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_SpelerActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox_SpelerActionPerformed
 
     /**
      * @param args the command line arguments
@@ -99,9 +239,11 @@ public class Jf_Overzicht extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JList jList1;
+    private javax.swing.JComboBox jComboBox_Speler;
+    private javax.swing.JComboBox jComboBox_Toernooi;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable_Overzicht;
+    private javax.swing.JToggleButton jToggleButton_Speler;
+    private javax.swing.JToggleButton jToggleButton_Toernooi;
     // End of variables declaration//GEN-END:variables
 }

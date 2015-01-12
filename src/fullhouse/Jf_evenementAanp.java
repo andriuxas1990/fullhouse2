@@ -135,6 +135,11 @@ public class Jf_evenementAanp extends javax.swing.JFrame {
         jTextField8.setText("jTextField8");
 
         jCB_niveauMclass.setModel(new javax.swing.DefaultComboBoxModel(new String[] { " " }));
+        jCB_niveauMclass.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCB_niveauMclassActionPerformed(evt);
+            }
+        });
 
         jTextField9.setText("jTextField9");
 
@@ -321,6 +326,10 @@ public class Jf_evenementAanp extends javax.swing.JFrame {
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField2ActionPerformed
+
+    private void jCB_niveauMclassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCB_niveauMclassActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCB_niveauMclassActionPerformed
 
     /**
      * @param args the command line arguments

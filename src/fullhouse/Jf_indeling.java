@@ -142,11 +142,21 @@ private void vulToernooi() {
         jLabel4.setToolTipText("");
 
         Tf_toernooiNr.setEditable(false);
+        Tf_toernooiNr.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Tf_toernooiNrActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Toernooi Naam:");
 
         Tf_toernooiNaam.setEditable(false);
         Tf_toernooiNaam.setText("jTextField3");
+        Tf_toernooiNaam.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Tf_toernooiNaamActionPerformed(evt);
+            }
+        });
 
         jB_indUitslag.setText("Uitslag");
 
@@ -256,6 +266,14 @@ private void vulToernooi() {
         this.setVisible(false);
         new jF_evenementZoeken().setVisible(true);
     }//GEN-LAST:event_jB_indToernooiZoekActionPerformed
+
+    private void Tf_toernooiNrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Tf_toernooiNrActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_Tf_toernooiNrActionPerformed
+
+    private void Tf_toernooiNaamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Tf_toernooiNaamActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_Tf_toernooiNaamActionPerformed
 
     /**
      * @param args the command line arguments
