@@ -402,7 +402,7 @@ public class Jf_spelerAanp extends javax.swing.JFrame {
         if (JOptionPane.YES_OPTION == response) {
 
             String s_naam = jT_spelerAanNaam.getText();
-            
+            System.out.println("lolo");
 
 
             String query = "DELETE FROM Speler "
