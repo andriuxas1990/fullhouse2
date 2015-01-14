@@ -25,7 +25,7 @@ public class FullhouseDB {
                 Logger.getLogger(FullhouseDB.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        System.out.println("••• Connected with the database •••");
+        //System.out.println("••• Connected with the database •••");
         return databaseConnectie;
 
     }
