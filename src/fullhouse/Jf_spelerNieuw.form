@@ -48,8 +48,13 @@
                                               <Group type="103" groupAlignment="1" max="-2" attributes="0">
                                                   <Component id="jT_nieuwSpeAdr" min="-2" pref="215" max="-2" attributes="0"/>
                                                   <Group type="102" alignment="0" attributes="0">
+                                                      <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
+                                                      <Component id="jD_nieuwSpeGeb" min="-2" max="-2" attributes="0"/>
+                                                  </Group>
+                                                  <Group type="102" alignment="0" attributes="0">
                                                       <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
                                                       <Group type="103" groupAlignment="0" attributes="0">
+                                                          <Component id="jB_nieuwSpeAnnuleren" min="-2" max="-2" attributes="0"/>
                                                           <Component id="jT_nieuwSpeEmail" min="-2" pref="126" max="-2" attributes="0"/>
                                                           <Group type="102" attributes="0">
                                                               <Component id="jT_nieuwSpeTelefoon" min="-2" pref="71" max="-2" attributes="0"/>
@@ -59,10 +64,6 @@
                                                               <Component id="jT_nieuwSpeMob" min="-2" pref="76" max="-2" attributes="0"/>
                                                           </Group>
                                                       </Group>
-                                                  </Group>
-                                                  <Group type="102" alignment="0" attributes="0">
-                                                      <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
-                                                      <Component id="jD_nieuwSpeGeb" min="-2" max="-2" attributes="0"/>
                                                   </Group>
                                               </Group>
                                               <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -90,15 +91,13 @@
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="77" max="-2" attributes="0"/>
-                      <Component id="jLabel1" min="-2" pref="323" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Component id="jB_spelerToevoegen" min="-2" pref="91" max="-2" attributes="0"/>
+                          <Component id="jLabel1" min="-2" pref="323" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
-          </Group>
-          <Group type="102" alignment="1" attributes="0">
-              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-              <Component id="jB_spelerToevoegen" min="-2" pref="91" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="57" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -156,8 +155,12 @@
                       <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <Component id="jB_spelerToevoegen" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="172" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="53" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jB_spelerToevoegen" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jB_nieuwSpeAnnuleren" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="119" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -260,6 +263,14 @@
       </Events>
     </Component>
     <Component class="com.toedter.calendar.JDateChooser" name="jD_nieuwSpeGeb">
+    </Component>
+    <Component class="javax.swing.JButton" name="jB_nieuwSpeAnnuleren">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Annuleren"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jB_nieuwSpeAnnulerenActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

@@ -4,8 +4,8 @@
  */
 package fullhouse;
 
-
 import java.awt.Color;
+import java.awt.Component;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,7 +17,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-
 
 /**
  *
@@ -62,6 +61,7 @@ public class Jf_spelerNieuw extends javax.swing.JFrame {
         jC_nieuwSpeInstr = new javax.swing.JCheckBox();
         jB_spelerToevoegen = new javax.swing.JButton();
         jD_nieuwSpeGeb = new com.toedter.calendar.JDateChooser();
+        jB_nieuwSpeAnnuleren = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(500, 400));
@@ -123,6 +123,13 @@ public class Jf_spelerNieuw extends javax.swing.JFrame {
             }
         });
 
+        jB_nieuwSpeAnnuleren.setText("Annuleren");
+        jB_nieuwSpeAnnuleren.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jB_nieuwSpeAnnulerenActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -148,18 +155,19 @@ public class Jf_spelerNieuw extends javax.swing.JFrame {
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                                     .addComponent(jT_nieuwSpeAdr, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                                        .addGap(2, 2, 2)
+                                                        .addComponent(jD_nieuwSpeGeb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                                         .addGap(1, 1, 1)
                                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                            .addComponent(jB_nieuwSpeAnnuleren)
                                                             .addComponent(jT_nieuwSpeEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                             .addGroup(layout.createSequentialGroup()
                                                                 .addComponent(jT_nieuwSpeTelefoon, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                                 .addComponent(jLabel16)
                                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                                .addComponent(jT_nieuwSpeMob, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                                        .addGap(2, 2, 2)
-                                                        .addComponent(jD_nieuwSpeGeb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                                                .addComponent(jT_nieuwSpeMob, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                                                 .addGap(18, 18, 18)
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                     .addComponent(jLabel6)
@@ -175,12 +183,10 @@ public class Jf_spelerNieuw extends javax.swing.JFrame {
                                         .addComponent(jC_nieuwSpeInstr))))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(77, 77, 77)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 323, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jB_spelerToevoegen, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(57, 57, 57))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jB_spelerToevoegen, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 323, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jT_nieuwSpePostcode, jT_nieuwSpeRank, jT_nieuwSpeStad});
@@ -228,8 +234,11 @@ public class Jf_spelerNieuw extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jT_nieuwSpeRank, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(30, 30, 30)))
-                .addComponent(jB_spelerToevoegen)
-                .addGap(172, 172, 172))
+                .addGap(53, 53, 53)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jB_spelerToevoegen)
+                    .addComponent(jB_nieuwSpeAnnuleren))
+                .addGap(119, 119, 119))
         );
 
         pack();
@@ -248,64 +257,72 @@ public class Jf_spelerNieuw extends javax.swing.JFrame {
     }//GEN-LAST:event_jT_nieuwSpeStadActionPerformed
 
     private void jB_spelerToevoegenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jB_spelerToevoegenActionPerformed
+        String speler = jT_nieuwSpeNaam.getText();
+        Component frame = null;
+        int response = JOptionPane.showConfirmDialog(frame, "Wilt u echt speler " + speler + " in Full♠House Database toevoegen", "LET OP!",
+                JOptionPane.YES_NO_OPTION);
+        if (JOptionPane.YES_OPTION == response) {
+            String naam = jT_nieuwSpeNaam.getText();
+            String adres = jT_nieuwSpeAdr.getText();
+            String postcode = jT_nieuwSpePostcode.getText();
+            String woonplaats = jT_nieuwSpeStad.getText();
+            String telnr = jT_nieuwSpeTelefoon.getText();
+            String mail = jT_nieuwSpeEmail.getText();
+            Date gebortedatum = jD_nieuwSpeGeb.getDate();
+            jD_nieuwSpeGeb.setDateFormatString("dd-MM-yyyy");
+            SimpleDateFormat dateFormate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+            String gebdatum = dateFormate.format(jD_nieuwSpeGeb.getDate());
+
+
+            JOptionPane.showMessageDialog(null, "Speler " + naam + " was met succes toegevoegt in FULL♠HOUSE Database !");
+            int ranking = Integer.parseInt(jT_nieuwSpeRank.getText());
+            boolean instructeur = jC_nieuwSpeInstr.isSelected();
+            System.out.println(gebdatum);
 
 
 
-        String naam = jT_nieuwSpeNaam.getText();
-        String adres = jT_nieuwSpeAdr.getText();
-        String postcode = jT_nieuwSpePostcode.getText();
-        String woonplaats = jT_nieuwSpeStad.getText();
-        String telnr = jT_nieuwSpeTelefoon.getText();
-        //int mob = Integer.parseInt(jT_nieuwSpeMob.getText());
-        String mail = jT_nieuwSpeEmail.getText();
-        Date gebortedatum = jD_nieuwSpeGeb.getDate();
-
-        jD_nieuwSpeGeb.setDateFormatString("dd-MM-yyyy");
-        SimpleDateFormat dateFormate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-        String gebdatum = dateFormate.format(jD_nieuwSpeGeb.getDate());
+            String query = "INSERT INTO Speler (s_naam, s_adres, s_postcode, s_woonplaats, s_telefoonnr, s_mail, s_geb_datum, s_ranking, s_isMasterClassInstr)"
+                    + " VALUES (? , ? , ? , ? , ? , ? , ? , ? , ? );";
 
 
-        JOptionPane.showMessageDialog(null, "Speler " + naam + " was met succes toegevoegt in FULL♠HOUSE Database !");
-        int ranking = Integer.parseInt(jT_nieuwSpeRank.getText());
-        boolean instructeur = jC_nieuwSpeInstr.isSelected();
-        System.out.println(gebdatum);
+            try {
+                Connection connection = FullhouseDB.getConnection();
+                PreparedStatement statement = connection.prepareStatement(query);
 
-
-
-        String query = "INSERT INTO Speler (s_naam, s_adres, s_postcode, s_woonplaats, s_telefoonnr, s_mail, s_geb_datum, s_ranking, s_isMasterClassInstr)"
-                + " VALUES (? , ? , ? , ? , ? , ? , ? , ? , ? );";
-
-
-        try {
-            Connection connection = FullhouseDB.getConnection();
-            PreparedStatement statement = connection.prepareStatement(query);
-
-            statement.setString(1, naam);
-            statement.setString(2, adres);
-            statement.setString(3, postcode);
-            statement.setString(4, woonplaats);
-            statement.setString(5, telnr);
-            statement.setString(6, mail);
-            statement.setString(7, gebdatum);
-            statement.setInt(8, ranking);
-            statement.setBoolean(9, instructeur);
+                statement.setString(1, naam);
+                statement.setString(2, adres);
+                statement.setString(3, postcode);
+                statement.setString(4, woonplaats);
+                statement.setString(5, telnr);
+                statement.setString(6, mail);
+                statement.setString(7, gebdatum);
+                statement.setInt(8, ranking);
+                statement.setBoolean(9, instructeur);
 
 
 
-            int rows = statement.executeUpdate();           
+               // int rows = statement.executeUpdate();
 
-            if (rows != 1) {
-                System.out.println("FOUT!!!");
+                //if (rows != 1) {
+                //    System.out.println("FOUT!!!");
+               // }
+            } catch (SQLException ex) {
+                Logger.getLogger(Jf_spelerNieuw.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(Jf_spelerNieuw.class.getName()).log(Level.SEVERE, null, ex);
+            this.dispose();
+            
         }
-        this.dispose();
+
+        
     }//GEN-LAST:event_jB_spelerToevoegenActionPerformed
 
     private void jT_nieuwSpeNaamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jT_nieuwSpeNaamActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jT_nieuwSpeNaamActionPerformed
+
+    private void jB_nieuwSpeAnnulerenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jB_nieuwSpeAnnulerenActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_jB_nieuwSpeAnnulerenActionPerformed
 
     /**
      * @param args the command line arguments
@@ -350,6 +367,7 @@ public class Jf_spelerNieuw extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jB_nieuwSpeAnnuleren;
     private javax.swing.JButton jB_spelerToevoegen;
     private javax.swing.JCheckBox jC_nieuwSpeInstr;
     private com.toedter.calendar.JDateChooser jD_nieuwSpeGeb;

@@ -13,33 +13,28 @@ import java.util.logging.Logger;
  * @author Karen
  */
 public class FullhouseDB {
-   
+
     private static Connection databaseConnectie;
-         
-    
+
     public static Connection getConnection() {
-        if(databaseConnectie == null){
-                String connectString = "jdbc:mysql://meru.hhs.nl:3306/14062984";
-                try {
-                     databaseConnectie = DriverManager.getConnection(connectString, "14062984", "fuxaejeiSe");
-                     System.out.println("Connectie");
-                } catch (SQLException ex) {
-                    Logger.getLogger(FullhouseDB.class.getName()).log(Level.SEVERE, null, ex);
+        if (databaseConnectie == null) {
+            String connectString = "jdbc:mysql://meru.hhs.nl:3306/14062984";
+            try {
+                databaseConnectie = DriverManager.getConnection(connectString, "14062984", "fuxaejeiSe");
+            } catch (SQLException ex) {
+                Logger.getLogger(FullhouseDB.class.getName()).log(Level.SEVERE, null, ex);
             }
-            } 
-        
+        }
+        System.out.println("••• Connected with the database •••");
         return databaseConnectie;
-        
+
     }
-    
-    public static ResultSet fetchQuery(String query) throws SQLException{
+
+    public static ResultSet fetchQuery(String query) throws SQLException {
         Connection connectie = getConnection();
         Statement statement = connectie.createStatement();
         statement.execute(query);
         ResultSet resultSet = statement.getResultSet();
         return resultSet;
-        }
     }
-   
-    
-    
+}

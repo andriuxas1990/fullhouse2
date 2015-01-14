@@ -5,13 +5,29 @@
 package fullhouse;
 
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 /**
  *
- * @author Karen
+ * @author Andrius
  */
 public class Jf_spelerAanp extends javax.swing.JFrame {
+
+    int spelernr;
 
     /**
      * Creates new form Jf_NewEvent
@@ -20,7 +36,65 @@ public class Jf_spelerAanp extends javax.swing.JFrame {
         initComponents();
         setIconImage(new ImageIcon(getClass().getResource("/resources/pokerSpade.png")).getImage());
         this.getContentPane().setBackground(Color.white);
+    }
 
+    public Jf_spelerAanp(int spelernr) {
+        this.spelernr = spelernr;
+        initComponents();
+        setIconImage(new ImageIcon(getClass().getResource("/resources/pokerSpade.png")).getImage());
+        vulAanpassenForm();
+    }
+
+    private void vulAanpassenForm() {
+        try {
+            String query = "select spelernr as Spelernr, s_naam as Naam, "
+                    + "s_adres as Adres, s_postcode as Postcode, "
+                    + "s_woonplaats as Woonplaats, s_telefoonnr as Telefoonnr, "
+                    + "s_mail as Mail, s_geb_datum as Gebortedatum , "
+                    + "s_ranking as Ranking, s_isMasterClassInstr as Is_Instructeur "
+                    + "from Speler "
+                    + "where Spelernr like ?;";
+
+            Connection connection = FullhouseDB.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, spelernr);
+
+            ResultSet results = statement.executeQuery();
+
+            while (results.next()) {
+                String spelerNr = results.getString("Spelernr");
+                jT_spelerAanSpelNr.setText(spelerNr);
+
+                String spelerNaam = results.getString("Naam");
+                jT_spelerAanNaam.setText(spelerNaam);
+
+                String s_adres = results.getString("Adres");
+                jT_spelerAanAdres.setText(s_adres);
+
+                String s_postcode = results.getString("Postcode");
+                jT_spelerAanPostC.setText(s_postcode);
+
+                String s_woonplaats = results.getString("Woonplaats");
+                jT_spelerAanStad.setText(s_woonplaats);
+
+                String s_telefoonnr = results.getString("Telefoonnr");
+                jT_spelerAanTelNr.setText(s_telefoonnr);
+
+                String s_mail = results.getString("Mail");
+                jT_spelerAanMail.setText(s_mail);
+
+                Date s_geb_datum = results.getDate("Gebortedatum");
+                jD_spelerAanGebDatum.setDate(s_geb_datum);
+
+                String s_ranking = results.getString("Ranking");
+                jT_spelerAanRanking.setText(s_ranking);
+
+                boolean s_isMasterClassInstr = results.getBoolean("Is_Instructeur");
+                jCh_spelerAanInst.setSelected(s_isMasterClassInstr);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(jF_evenementZoeken.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -33,9 +107,9 @@ public class Jf_spelerAanp extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
+        jT_spelerAanSpelNr = new javax.swing.JTextField();
+        jT_spelerAanTelNr = new javax.swing.JTextField();
+        jT_spelerAanPostC = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -43,18 +117,17 @@ public class Jf_spelerAanp extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jTextField6 = new javax.swing.JTextField();
-        jTextField7 = new javax.swing.JTextField();
-        jTextField8 = new javax.swing.JTextField();
-        jTextField9 = new javax.swing.JTextField();
-        jLabel16 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
-        jTextField10 = new javax.swing.JTextField();
+        jT_spelerAanMail = new javax.swing.JTextField();
+        jT_spelerAanStad = new javax.swing.JTextField();
+        jT_spelerAanRanking = new javax.swing.JTextField();
+        jT_spelerAanNaam = new javax.swing.JTextField();
+        jT_spelerAanAdres = new javax.swing.JTextField();
         jLabel17 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
-        jCheckBox2 = new javax.swing.JCheckBox();
-        jButton2 = new javax.swing.JButton();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        jCh_spelerAanInst = new javax.swing.JCheckBox();
+        jB_spelerAanOpslaan = new javax.swing.JButton();
+        jD_spelerAanGebDatum = new com.toedter.calendar.JDateChooser();
+        jB_spelerAanAnnuleren = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(500, 400));
@@ -65,9 +138,11 @@ public class Jf_spelerAanp extends javax.swing.JFrame {
         jLabel1.setText("AANPASSEN SPELER ");
         jLabel1.setToolTipText("");
 
-        jTextField3.setText("jTextField3");
-
-        jTextField4.setText("jTextField4");
+        jT_spelerAanSpelNr.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jT_spelerAanSpelNrActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("PlayerNr.");
 
@@ -83,27 +158,37 @@ public class Jf_spelerAanp extends javax.swing.JFrame {
 
         jLabel9.setText("Email:");
 
-        jTextField6.setText("jTextField6");
+        jT_spelerAanMail.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jT_spelerAanMailActionPerformed(evt);
+            }
+        });
 
-        jTextField7.setText("jTextField7");
-
-        jTextField8.setText("jTextField8");
-
-        jTextField9.setText("jTextField9");
-
-        jLabel16.setText("Mobiel:");
-
-        jTextField5.setText("jTextField5");
-
-        jTextField10.setText("jTextField10");
+        jT_spelerAanNaam.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jT_spelerAanNaamActionPerformed(evt);
+            }
+        });
 
         jLabel17.setText("Stad:");
 
         jLabel18.setText("Ranking:");
 
-        jCheckBox2.setText("Instructor?");
+        jCh_spelerAanInst.setText("Instructor?");
 
-        jButton2.setText("Opslaan");
+        jB_spelerAanOpslaan.setText("Opslaan");
+        jB_spelerAanOpslaan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jB_spelerAanOpslaanActionPerformed(evt);
+            }
+        });
+
+        jB_spelerAanAnnuleren.setText("Annuleren");
+        jB_spelerAanAnnuleren.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jB_spelerAanAnnulerenActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -121,57 +206,52 @@ public class Jf_spelerAanp extends javax.swing.JFrame {
                                     .addComponent(jLabel4)
                                     .addComponent(jLabel7)
                                     .addComponent(jLabel8))
+                                .addGap(3, 3, 3)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jT_spelerAanNaam, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addGap(3, 3, 3)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(jT_spelerAanAdres, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                                .addGap(1, 1, 1)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(jT_spelerAanTelNr, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(jB_spelerAanAnnuleren)
                                                     .addGroup(layout.createSequentialGroup()
                                                         .addGap(1, 1, 1)
-                                                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                        .addComponent(jLabel16)
-                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                        .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                    .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                                        .addGap(2, 2, 2)
-                                                        .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                                        .addComponent(jD_spelerAanGebDatum, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                            .addComponent(jT_spelerAanMail, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGap(36, 36, 36)
+                                                .addComponent(jLabel2)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(jT_spelerAanSpelNr, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGap(18, 18, 18)
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                     .addGroup(layout.createSequentialGroup()
-                                                        .addGap(36, 36, 36)
-                                                        .addComponent(jLabel2)
-                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                    .addGroup(layout.createSequentialGroup()
-                                                        .addGap(18, 18, 18)
                                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                             .addComponent(jLabel6)
                                                             .addComponent(jLabel17)
                                                             .addComponent(jLabel18))
                                                         .addGap(28, 28, 28)
                                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                            .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                            .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(13, 13, 13)
-                                        .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jCheckBox2))))))
+                                                            .addComponent(jT_spelerAanStad, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                            .addComponent(jT_spelerAanPostC, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                            .addComponent(jT_spelerAanRanking, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                                    .addComponent(jCh_spelerAanInst)))))))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(77, 77, 77)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 323, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(74, 74, 74))
+                .addComponent(jB_spelerAanOpslaan, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(69, 69, 69))
         );
 
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jTextField4, jTextField7, jTextField8});
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jT_spelerAanPostC, jT_spelerAanRanking, jT_spelerAanStad});
 
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -183,53 +263,125 @@ public class Jf_spelerAanp extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
-                            .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jT_spelerAanNaam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
-                            .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jT_spelerAanAdres, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel7)
-                            .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jD_spelerAanGebDatum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(11, 11, 11)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel8)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel16)
-                            .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jT_spelerAanTelNr, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel18))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jCheckBox2))
+                                .addComponent(jT_spelerAanMail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jCh_spelerAanInst))
                             .addComponent(jLabel9)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jT_spelerAanSpelNr, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(49, 49, 49)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jT_spelerAanPostC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel6))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jT_spelerAanStad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel17))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jT_spelerAanRanking, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(30, 30, 30)))
-                .addComponent(jButton2)
-                .addGap(147, 147, 147))
+                .addGap(39, 39, 39)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jB_spelerAanOpslaan)
+                    .addComponent(jB_spelerAanAnnuleren))
+                .addGap(108, 108, 108))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
+    private void jT_spelerAanNaamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jT_spelerAanNaamActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jT_spelerAanNaamActionPerformed
+
+    private void jB_spelerAanAnnulerenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jB_spelerAanAnnulerenActionPerformed
+        this.dispose();
+
+    }//GEN-LAST:event_jB_spelerAanAnnulerenActionPerformed
+
+    private void jT_spelerAanSpelNrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jT_spelerAanSpelNrActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jT_spelerAanSpelNrActionPerformed
+
+    private void jT_spelerAanMailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jT_spelerAanMailActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jT_spelerAanMailActionPerformed
+
+    private void jB_spelerAanOpslaanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jB_spelerAanOpslaanActionPerformed
+        String speler = jT_spelerAanNaam.getText();
+        Component frame = null;
+        int response = JOptionPane.showConfirmDialog(frame, "Wilt u echt speler " + speler + " aanpassen?", "LET OP!",
+                JOptionPane.YES_NO_OPTION);
+        if (JOptionPane.YES_OPTION == response) {
+
+            String s_naam = jT_spelerAanNaam.getText();
+            String s_adres = jT_spelerAanAdres.getText();
+            String s_postcode = jT_spelerAanPostC.getText();
+            String s_woonplaats = jT_spelerAanStad.getText();
+            String s_telefoonnr = jT_spelerAanTelNr.getText();
+            String s_mail = jT_spelerAanMail.getText();
+            Date gebortedatum = jD_spelerAanGebDatum.getDate();
+            jD_spelerAanGebDatum.setDateFormatString("dd-MM-yyyy");
+            SimpleDateFormat dateFormate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+            String s_geb_datum = dateFormate.format(jD_spelerAanGebDatum.getDate());
+
+            int s_ranking = Integer.parseInt(jT_spelerAanRanking.getText());
+            boolean s_isMasterClassInstr = jCh_spelerAanInst.isSelected();
+
+
+            String query = "update Speler  set s_naam = ? , s_adres = ? , s_postcode = ? ,"
+                    + " s_woonplaats = ? , s_telefoonnr = ? , s_mail = ? , s_geb_datum = ? , "
+                    + "s_ranking = ? , s_isMasterClassInstr = ? where spelernr = ? ;";
+
+
+            try {
+                Connection connection = FullhouseDB.getConnection();
+                PreparedStatement statement = connection.prepareStatement(query);
+
+                statement.setString(1, s_naam);
+                statement.setString(2, s_adres);
+                statement.setString(3, s_postcode);
+                statement.setString(4, s_woonplaats);
+                statement.setString(5, s_telefoonnr);
+                statement.setString(6, s_mail);
+                statement.setString(7, s_geb_datum);
+                statement.setInt(8, s_ranking);
+                statement.setBoolean(9, s_isMasterClassInstr);
+                statement.setInt(10, spelernr);
+
+                int rows = statement.executeUpdate();
+
+                if (rows != 1) {
+                    System.out.println("FOUT!!!");
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(Jf_spelerNieuw.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            JOptionPane.showMessageDialog(null, "Speler " + s_naam + " was met succes aangepast!");
+            this.dispose();
+
+        }
+
+    }//GEN-LAST:event_jB_spelerAanOpslaanActionPerformed
+
     public static void main(String args[]) {
         /*
          * Set the Nimbus look and feel
@@ -261,19 +413,22 @@ public class Jf_spelerAanp extends javax.swing.JFrame {
         /*
          * Create and display the form
          */
+
         java.awt.EventQueue.invokeLater(new Runnable() {
 
+            @Override
             public void run() {
                 new Jf_spelerAanp().setVisible(true);
+
             }
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton2;
-    private javax.swing.JCheckBox jCheckBox2;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
+    private javax.swing.JButton jB_spelerAanAnnuleren;
+    private javax.swing.JButton jB_spelerAanOpslaan;
+    private javax.swing.JCheckBox jCh_spelerAanInst;
+    private com.toedter.calendar.JDateChooser jD_spelerAanGebDatum;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
@@ -283,14 +438,13 @@ public class Jf_spelerAanp extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField10;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
-    private javax.swing.JTextField jTextField9;
+    private javax.swing.JTextField jT_spelerAanAdres;
+    private javax.swing.JTextField jT_spelerAanMail;
+    private javax.swing.JTextField jT_spelerAanNaam;
+    private javax.swing.JTextField jT_spelerAanPostC;
+    private javax.swing.JTextField jT_spelerAanRanking;
+    private javax.swing.JTextField jT_spelerAanSpelNr;
+    private javax.swing.JTextField jT_spelerAanStad;
+    private javax.swing.JTextField jT_spelerAanTelNr;
     // End of variables declaration//GEN-END:variables
 }

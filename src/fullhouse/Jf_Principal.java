@@ -44,6 +44,7 @@ public class Jf_Principal extends javax.swing.JFrame {
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         jL_PrincipalBackg = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -59,7 +60,7 @@ public class Jf_Principal extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton2);
-        jButton2.setBounds(220, 240, 82, 29);
+        jButton2.setBounds(220, 240, 80, 40);
 
         jButton4.setText("Evenement");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
@@ -68,7 +69,7 @@ public class Jf_Principal extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton4);
-        jButton4.setBounds(90, 240, 112, 29);
+        jButton4.setBounds(110, 240, 90, 40);
 
         jButton5.setText("Locatie");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
@@ -77,7 +78,7 @@ public class Jf_Principal extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton5);
-        jButton5.setBounds(430, 240, 89, 29);
+        jButton5.setBounds(430, 240, 80, 40);
 
         jButton6.setText("Overzicht");
         jButton6.addActionListener(new java.awt.event.ActionListener() {
@@ -86,7 +87,16 @@ public class Jf_Principal extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton6);
-        jButton6.setBounds(320, 240, 97, 29);
+        jButton6.setBounds(320, 240, 90, 40);
+
+        jButton1.setText("Sluiten");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton1);
+        jButton1.setBounds(535, 240, 70, 40);
 
         jL_PrincipalBackg.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jL_PrincipalBackg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/logo730.png"))); // NOI18N
@@ -111,6 +121,10 @@ public class Jf_Principal extends javax.swing.JFrame {
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         new Jf_Overzicht().setVisible(true);
     }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -155,6 +169,7 @@ public class Jf_Principal extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;

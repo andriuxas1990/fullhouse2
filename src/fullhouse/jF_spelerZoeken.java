@@ -34,7 +34,7 @@ public class jF_spelerZoeken extends javax.swing.JFrame {
 
     private void vulSpelersTabel() {
         try {
-            DefaultTableModel datamodel = createVoedingModel();
+            DefaultTableModel datamodel = createSpelersModel();
             this.jT_spelerZoeken.setModel(datamodel);
 
             String query = "select spelernr, s_naam, s_ranking from Speler "
@@ -61,6 +61,8 @@ public class jF_spelerZoeken extends javax.swing.JFrame {
 
     }
 
+    
+    
     private String getZoekTerm() {
         String text = Tf_zoekterm.getText();
         if (eersteKeer || text.length() == 0) {
@@ -70,7 +72,7 @@ public class jF_spelerZoeken extends javax.swing.JFrame {
         }
     }
 
-    private DefaultTableModel createVoedingModel() {
+    private DefaultTableModel createSpelersModel() {
         DefaultTableModel model = new TableModel();
         model.addColumn("SpelerNr.");
         model.addColumn("Naam");
@@ -203,10 +205,10 @@ public class jF_spelerZoeken extends javax.swing.JFrame {
         if (evt.getClickCount() == 2) {
             int rij = this.jT_spelerZoeken.getSelectedRow();
             if (rij > -1) {
-                int voednr = (Integer) jT_spelerZoeken.getValueAt(rij, 0);
-                this.setVisible(false);
-                Jf_indeling event = new Jf_indeling(voednr);
-                event.setVisible(true);
+                int spelernr = (Integer) jT_spelerZoeken.getValueAt(rij, 0);
+                this.dispose();
+                Jf_spelerAanp jf_spelerAanp = new Jf_spelerAanp(spelernr);
+                jf_spelerAanp.setVisible(true);
             }
         }
     }//GEN-LAST:event_jT_spelerZoekenMousePressed
