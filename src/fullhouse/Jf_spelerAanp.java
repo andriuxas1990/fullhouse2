@@ -128,6 +128,7 @@ public class Jf_spelerAanp extends javax.swing.JFrame {
         jB_spelerAanOpslaan = new javax.swing.JButton();
         jD_spelerAanGebDatum = new com.toedter.calendar.JDateChooser();
         jB_spelerAanAnnuleren = new javax.swing.JButton();
+        jB_spelerAanVerwijderen = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(500, 400));
@@ -190,6 +191,13 @@ public class Jf_spelerAanp extends javax.swing.JFrame {
             }
         });
 
+        jB_spelerAanVerwijderen.setText("Verwijderen");
+        jB_spelerAanVerwijderen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jB_spelerAanVerwijderenActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -210,16 +218,19 @@ public class Jf_spelerAanp extends javax.swing.JFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jT_spelerAanNaam, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                             .addComponent(jT_spelerAanAdres, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                                 .addGap(1, 1, 1)
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                     .addComponent(jT_spelerAanTelNr, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                    .addComponent(jB_spelerAanAnnuleren)
                                                     .addGroup(layout.createSequentialGroup()
                                                         .addGap(1, 1, 1)
-                                                        .addComponent(jD_spelerAanGebDatum, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                                        .addComponent(jD_spelerAanGebDatum, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                    .addGroup(layout.createSequentialGroup()
+                                                        .addComponent(jB_spelerAanAnnuleren)
+                                                        .addGap(40, 40, 40)
+                                                        .addComponent(jB_spelerAanVerwijderen))))
                                             .addComponent(jT_spelerAanMail, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addGroup(layout.createSequentialGroup()
@@ -301,7 +312,8 @@ public class Jf_spelerAanp extends javax.swing.JFrame {
                 .addGap(39, 39, 39)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jB_spelerAanOpslaan)
-                    .addComponent(jB_spelerAanAnnuleren))
+                    .addComponent(jB_spelerAanAnnuleren)
+                    .addComponent(jB_spelerAanVerwijderen))
                 .addGap(108, 108, 108))
         );
 
@@ -382,6 +394,40 @@ public class Jf_spelerAanp extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jB_spelerAanOpslaanActionPerformed
 
+    private void jB_spelerAanVerwijderenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jB_spelerAanVerwijderenActionPerformed
+         String speler = jT_spelerAanNaam.getText();
+        Component frame = null;
+        int response = JOptionPane.showConfirmDialog(frame, "Wilt u echt speler " + speler + " verwijderen?", "LET OP!",
+                JOptionPane.YES_NO_OPTION);
+        if (JOptionPane.YES_OPTION == response) {
+
+            String s_naam = jT_spelerAanNaam.getText();
+            
+
+
+            String query = "DELETE FROM Speler "
+                    + "WHERE spelernr = ? ;";
+
+            try {
+                Connection connection = FullhouseDB.getConnection();
+                PreparedStatement statement = connection.prepareStatement(query);             
+                
+                statement.setInt(1, spelernr);
+
+                int rows = statement.executeUpdate();
+
+                if (rows != 1) {
+                    System.out.println("FOUT!!!");
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(Jf_spelerNieuw.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            JOptionPane.showMessageDialog(null, "Speler " + s_naam + " was met succes verwijderd!");
+            this.dispose();
+
+        }
+    }//GEN-LAST:event_jB_spelerAanVerwijderenActionPerformed
+
     public static void main(String args[]) {
         /*
          * Set the Nimbus look and feel
@@ -426,6 +472,7 @@ public class Jf_spelerAanp extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jB_spelerAanAnnuleren;
     private javax.swing.JButton jB_spelerAanOpslaan;
+    private javax.swing.JButton jB_spelerAanVerwijderen;
     private javax.swing.JCheckBox jCh_spelerAanInst;
     private com.toedter.calendar.JDateChooser jD_spelerAanGebDatum;
     private javax.swing.JLabel jLabel1;
